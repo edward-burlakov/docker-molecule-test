@@ -3,6 +3,7 @@ pipeline {
     docker {
       alwaysPull true
       image 'alainchiasson/docker-molecule:develop'
+      args '--privileged -v /DATA/docker-cache:/docker-cache'
     }
   }
   stages {
