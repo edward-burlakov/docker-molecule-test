@@ -10,7 +10,11 @@ example:
 ```
 pipeline {
   agent {
-    docker { image 'alainchiasson/docker-molecule' }
+    docker {
+      alwaysPull true
+      image 'alainchiasson/docker-molecule'
+      args '--privileged -v /DATA/docker-cache:/docker-cache'
+    }
   }
   stages {
     stage('run test') {
@@ -24,9 +28,21 @@ pipeline {
 
 # Development
 
-This repository is also setup to test itself using a Jenkinsfile. The role include
-here is a simple role to validate that the Molecule image works as an agent on
-a generic Jenkins slave.
+This repository is also setup to test/validate itself using a Jenkinsfile. The
+role include here is a simple role to validate that the Molecule image works as
+an agent on a generic Jenkins slave.
+
+## Simple Role creation
+
+The role and test information was built using :
+
+```
+molecule init role -r simple
+```
+
+Which selects defaults for everything - including testing inside docker. This
+creates the role in the subdirectory simple, where molecule must be run from.
+The first test is to make sure, it runs as is.
 
 # TODO
 
