@@ -28,4 +28,4 @@ RUN addgroup -g ${gid} ${group} \
 
 # Default working directory
 USER ${user}
-WORKDIR ${jenkins_user_home}
+WORKDIR ${molecule_user_home}
