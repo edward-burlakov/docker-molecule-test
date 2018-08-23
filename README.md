@@ -24,9 +24,9 @@ pipeline {
 
 # Development
 
-This repository is also setup to test itself using a Jenkinsfile. The role include
-here is a simple role to validate that the Molecule image works as an agent on
-a generic Jenkins slave.
+This repository is also setup to test/validate itself using a Jenkinsfile. The
+role include here is a simple role to validate that the Molecule image works as
+an agent on a generic Jenkins slave.
 
 # TODO
 
