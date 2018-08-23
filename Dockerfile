@@ -1,25 +1,31 @@
-# Docker image to run Molecule from a Jenkinsfile
-FROM centos:7
+# Docker image to run Molecule from a Jenkinsfile w/ Docker in Docker
+FROM docker:stable-dind
 
-RUN yum update -y
-RUN yum install -y epel-release deltarpm
-RUN yum install -y python python2-pip
-RUN yum install -y gcc python-devel
-RUN yum install -y docker
+# Defining default variables and build arguments
+ARG user=molecule
+ARG group=molecule
+ARG uid=1000
+ARG gid=1000
+ARG molecule_user_home=/home/${user}
 
-RUN yum install -y sudo
-# Shortcut for build tools. Way too much !!
-# RUN yum groupinstall -y "Development Tools"
+RUN apk add --no-cache \
+    ansible \
+    python2-dev \
+    py2-pip \
+    py2-psutil \
+    py2-paramiko
 
-RUN pip install molecule
-RUN pip install docker
+RUN pip install docker molecule
 
-RUN adduser molecule
-RUN echo "molecule ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/molecule
-USER molecule
-WORKDIR /home/molecule
+RUN addgroup -g ${gid} ${group} \
+  && adduser \
+    -h "${molecule_user_home}" \
+    -u "${uid}" \
+    -G "${group}" \
+    -s /bin/bash \
+    -D "${user}" \
+  && echo "${user}:${user}" | chpasswd
 
-CMD ["molecule"]
-
-#includedir /etc/sudoers.d
-# molecule ALL=(ALL) NOPASSWD:ALL
+# Default working directory
+USER ${user}
+WORKDIR ${jenkins_user_home}
