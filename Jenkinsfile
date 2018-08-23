@@ -1,6 +1,7 @@
 pipeline {
   agent {
     docker {
+      alwaysPull true
       image 'alainchiasson/docker-molecule:develop'
     }
   }
