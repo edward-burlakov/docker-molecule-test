@@ -24,5 +24,10 @@ pipeline {
         sh 'docker info'
       }
     }
+    stage ("Run tests"){
+      steps {
+        sh 'cd simple && molecule test'
+      }
+    }
   }
 }
