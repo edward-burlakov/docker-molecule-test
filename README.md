@@ -10,7 +10,11 @@ example:
 ```
 pipeline {
   agent {
-    docker { image 'alainchiasson/docker-molecule' }
+    docker {
+      alwaysPull true
+      image 'alainchiasson/docker-molecule'
+      args '--privileged -v /DATA/docker-cache:/docker-cache'
+    }
   }
   stages {
     stage('run test') {
