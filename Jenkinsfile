@@ -10,7 +10,11 @@ pipeline {
         // Jenkins check out the role into a folder with arbitrary name,
         // we need to let Ansible know where to find role
         sh 'env'
-        sh 'molcule --version'
+      }
+    }
+    stage ("Display Molecule version") {
+      steps {
+        sh 'molecule --version'
       }
     }
     stage ("Validate Docker"){
