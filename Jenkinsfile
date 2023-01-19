@@ -12,6 +12,16 @@ pipeline {
         sh 'env'
       }
     }
+    stage ("Docker install") {
+      steps {
+        sh 'sudo yum check-update'
+        sh 'curl -fsSL https://get.docker.com/ | sh'
+        sh 'sudo systemctl start docker'
+        sh 'sudo systemctl enable docker'
+        sh 'sudo systemctl status docker'
+        sh 'sudo usermod -aG docker $(whoami)'
+    }
+        }
     stage ("Display Molecule version") {
       steps {
         sh 'molecule --version'

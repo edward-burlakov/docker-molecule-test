@@ -12,13 +12,12 @@ RUN apk add --no-cache \
     ansible \
     bash \
     curl \
-    python2-dev \
-    py2-pip \
-    py2-psutil \
-    py2-paramiko \
     tini
-
-RUN pip install docker molecule
+RUN yum install -y python3-pip
+RUN yum install -y python3-psutil
+RUN yum install -y python3-devel.x86_64
+RUN pip3 install paramiko
+RUN pip3 install docker molecule
 
 RUN addgroup -g ${gid} ${group} \
   && adduser \
